@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist/esm",
+    "module": "NodeNext",
+    "target": "ES2022",
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "importHelpers": true,
+    "types": ["node"],
+    "noEmitOnError": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["test", "examples", "dist", "node_modules"]
+}

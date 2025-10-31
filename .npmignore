@@ -1,0 +1,10 @@
+src/
+test/
+examples/
+tsconfig*.json
+eslint.config.js
+.prettierrc
+.github/
+coverage/
+scripts/
+openapi.yaml

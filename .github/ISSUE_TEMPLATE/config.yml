@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: mailto:security@mailrify.com
+    about: Please email security issues directly instead of opening a public issue.

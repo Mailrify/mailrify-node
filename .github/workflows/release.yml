@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+          always-auth: true
+      - run: npm ci
+      - name: Sync OpenAPI spec
+        run: npm run generate:types
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run build
+      - name: Run integration tests
+        if: secrets.MAILRIFY_API_KEY != ''
+        run: npm run test:integration
+        env:
+          MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
+          MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: CHANGELOG.md

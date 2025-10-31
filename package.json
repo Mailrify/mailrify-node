@@ -1,0 +1,78 @@
+{
+  "name": "mailrify",
+  "description": "Node.js SDK for the Mailrify email delivery API.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "generate:types": "node scripts/sync-openapi.mjs && openapi-typescript openapi.yaml -o src/types/openapi.ts",
+    "build:esm": "tsc -p tsconfig.build.esm.json",
+    "build:cjs": "tsc -p tsconfig.build.cjs.json",
+    "postbuild:cjs": "node scripts/postbuild.mjs",
+    "build": "npm run clean && npm run generate:types && npm run build:esm && npm run build:cjs",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" \"examples/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" \"test/**/*.ts\" \"examples/**/*.ts\" --fix",
+    "format": "prettier --check \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "format:fix": "prettier --write \"**/*.{ts,js,json,md,yml,yaml}\"",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:unit",
+    "test:unit": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mailrify",
+    "email",
+    "sdk",
+    "mail",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mailrify/mailrify-node-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mailrify/mailrify-node-sdk/issues"
+  },
+  "homepage": "https://github.com/mailrify/mailrify-node-sdk#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^24.9.2",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "@vitest/coverage-v8": "^4.0.5",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "openapi-typescript": "^7.10.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vitest": "^4.0.5"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "tslib": "^2.8.1"
+  }
+}
