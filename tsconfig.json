@@ -12,7 +12,12 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "types": ["node", "vitest"],
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "mailrify": ["./src/index.ts"],
+      "mailrify/*": ["./src/*"]
+    }
   },
   "include": ["src", "test", "examples", "scripts"],
   "exclude": ["dist", "node_modules"]
