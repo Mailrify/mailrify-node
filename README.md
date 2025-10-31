@@ -1,6 +1,6 @@
 # Mailrify Node.js SDK
 
-[![CI](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml/badge.svg)](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml)
+[![CI](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml/badge.svg)](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml) 
 [![Release](https://github.com/mailrify/mailrify-node/actions/workflows/release.yml/badge.svg)](https://github.com/mailrify/mailrify-node/actions/workflows/release.yml)
 
 
