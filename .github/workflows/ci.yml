@@ -31,6 +31,8 @@ jobs:
     env:
       MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
       MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
+      MAILRIFY_TEST_FROM: ${{ secrets.MAILRIFY_TEST_FROM }}
+      MAILRIFY_TEST_TO: ${{ secrets.MAILRIFY_TEST_TO }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 20
