@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: write
       packages: write
+    env:
+      MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
+      MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 20
@@ -28,11 +31,11 @@ jobs:
       - run: npm run test:unit
       - run: npm run build
       - name: Run integration tests
-        if: ${{ secrets.MAILRIFY_API_KEY != '' }}
+        if: ${{ env.MAILRIFY_API_KEY != '' }}
         run: npm run test:integration
         env:
-          MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
-          MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
+          MAILRIFY_API_KEY: ${{ env.MAILRIFY_API_KEY }}
+          MAILRIFY_BASE_URL: ${{ env.MAILRIFY_BASE_URL }}
       - name: Publish to npm
         run: npm publish --access public
         env:

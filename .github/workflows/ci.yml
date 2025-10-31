@@ -26,8 +26,11 @@ jobs:
 
   integration:
     needs: build
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.MAILRIFY_API_KEY != '' }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    env:
+      MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
+      MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 20
@@ -36,7 +39,6 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run test:integration
-        env:
-          MAILRIFY_API_KEY: ${{ secrets.MAILRIFY_API_KEY }}
-          MAILRIFY_BASE_URL: ${{ secrets.MAILRIFY_BASE_URL }}
+      - name: Run integration tests
+        if: env.MAILRIFY_API_KEY != ''
+        run: npm run test:integration
