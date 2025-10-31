@@ -1,5 +1,9 @@
 # Mailrify Node.js SDK
 
+[![CI](https://github.com/mailrify/mailrify-node/actions/workflows/ci.yml/badge.svg)](https://github.com/mailrify/mailrify-node/actions/workflows/ci.yml)
+[![Release](https://github.com/mailrify/mailrify-node/actions/workflows/release.yml/badge.svg)](https://github.com/mailrify/mailrify-node/actions/workflows/release.yml)
+
+
 Official TypeScript SDK for the [Mailrify](https://mailrify.com) transactional and marketing email API. The SDK provides a thin, type-safe wrapper over the Mailrify REST endpoints generated from the public OpenAPI contract.
 
 ## Features
