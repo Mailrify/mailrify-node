@@ -1,6 +1,8 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## [0.1.1] - 31-10-2025
+
+- Remove `dotenv` package from the dependencies.
 
 ## [0.1.0] - 31-10-2025
 
