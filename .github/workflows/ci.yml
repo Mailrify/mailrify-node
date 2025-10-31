@@ -26,7 +26,7 @@ jobs:
 
   integration:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.MAILRIFY_API_KEY != ''
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.MAILRIFY_API_KEY != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
