@@ -32,24 +32,29 @@ pnpm add mailrify
 ```ts
 import { Client } from 'mailrify';
 
-const mailrify = new Client({
-  apiKey: process.env.MAILRIFY_API_KEY!,
+const mailrify = new Client({ 
+  apiKey: 'YOUR_API_KEY',
   // Optional overrides:
   // baseUrl: 'https://app.mailrify.com/api',
   // timeout: 30_000,
   // userAgent: 'my-app/1.0.0',
 });
 
-await mailrify.emails.send({
-  to: 'customer@example.com',
-  from: 'no-reply@yourdomain.com',
-  subject: 'Welcome to Mailrify!',
-  html: '<p>Hello there 👋</p>',
-  text: 'Hello there',
-});
+const sendEmail = async () => {
+  const response = await mailrify.emails.send({
+    from: 'Your app <no-reply@yourdomain.com>',
+    to: 'client@example.com',
+    subject: 'Welcome to Mailrify 🚀',
+    html: '<p>It works! 👋</p>',
+    text: 'It works!',
+  });
 
-const email = await mailrify.emails.get('email-id');
-console.log(email.latestStatus);
+  console.log('Mailrify email queued:', response);
+};
+
+sendEmail().catch((error) => {
+  console.error('Failed to send email with Mailrify:', error);
+});
 ```
 
 ## Configuration
