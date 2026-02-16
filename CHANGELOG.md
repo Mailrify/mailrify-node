@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Mailrify/mailrify-node/compare/v1.0.0...v1.0.1) (2026-02-16)
+
+
+### Bug Fixes
+
+* publish npm from release-please workflow ([e14d055](https://github.com/Mailrify/mailrify-node/commit/e14d055a7ec0fbfc76599a7aa92a6bb18b6f6e29))
+
 ## [1.0.0](https://github.com/Mailrify/mailrify-node/compare/v0.1.1...v1.0.0) (2026-02-16)
 
 
