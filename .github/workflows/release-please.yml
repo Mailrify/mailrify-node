@@ -45,7 +45,11 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
-      - run: npm publish --provenance --access public
+      - run: |
+          unset NODE_AUTH_TOKEN
+          unset NPM_TOKEN
+          unset NPM_CONFIG_AUTH_TYPE
+          npm publish --provenance --access public
         env:
           NPM_CONFIG_PROVENANCE: true
           NPM_CONFIG_AUTH_TYPE: oauth
@@ -66,7 +70,11 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
-      - run: npm publish --provenance --access public
+      - run: |
+          unset NODE_AUTH_TOKEN
+          unset NPM_TOKEN
+          unset NPM_CONFIG_AUTH_TYPE
+          npm publish --provenance --access public
         env:
           NPM_CONFIG_PROVENANCE: true
           NPM_CONFIG_AUTH_TYPE: oauth
