@@ -46,6 +46,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm publish --provenance --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
 
   publish-manual:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -64,3 +66,5 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm publish --provenance --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
