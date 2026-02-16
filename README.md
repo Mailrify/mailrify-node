@@ -1,5 +1,9 @@
 # Mailrify Node.js SDK
 
+[![CI](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml)
+[![Release Please](https://github.com/Mailrify/mailrify-node/actions/workflows/release-please.yml/badge.svg?branch=main)](https://github.com/Mailrify/mailrify-node/actions/workflows/release-please.yml)
+[![Publish to npm](https://github.com/Mailrify/mailrify-node/actions/workflows/publish.yml/badge.svg?branch=main)](https://github.com/Mailrify/mailrify-node/actions/workflows/publish.yml)
+
 Official Node.js / TypeScript SDK for the Mailrify API.
 
 ## Install
