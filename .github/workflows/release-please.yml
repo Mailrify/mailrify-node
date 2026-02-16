@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       publish_ref:
-        description: 'Tag or ref to publish (example: v1.0.1)'
+        description: "Tag or ref to publish (example: v1.0.1)"
         required: true
         type: string
 
@@ -42,12 +42,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
       - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ""
-          NPM_TOKEN: ""
 
   publish-manual:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -62,9 +60,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
       - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ""
-          NPM_TOKEN: ""
