@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.2](https://github.com/Mailrify/mailrify-node/compare/v1.0.1...v1.0.2) (2026-02-16)
+
+
+### Bug Fixes
+
+* add manual oidc publish path to release-please workflow ([26b3e37](https://github.com/Mailrify/mailrify-node/commit/26b3e3762ca7663c2136966976b728f96684eb8d))
+* add repository metadata for npm provenance validation ([8c84a57](https://github.com/Mailrify/mailrify-node/commit/8c84a57a195846295066a3f46103b713c0f303b0))
+* align npm trusted publishing workflows with npm docs ([2063103](https://github.com/Mailrify/mailrify-node/commit/2063103ff35d04c0780a850fb161c36531f45202))
+* enable oidc token at workflow level for npm trusted publishing ([fff9269](https://github.com/Mailrify/mailrify-node/commit/fff9269587b1d622d25caf9285adb963fd3f0005))
+* enforce tokenless npm publish for oidc workflow runs ([a4a110e](https://github.com/Mailrify/mailrify-node/commit/a4a110e5be24dca86293688f0d8566bec0645721))
+* force tokenless npm trusted publishing via oidc ([b034244](https://github.com/Mailrify/mailrify-node/commit/b034244885f855df1b91bd6f4c9a27adc11da271))
+* set repository metadata before npm publish for tagged releases ([008a6f4](https://github.com/Mailrify/mailrify-node/commit/008a6f48b01b9068651395aab51156f77f7060cd))
+
 ## [1.0.1](https://github.com/Mailrify/mailrify-node/compare/v1.0.0...v1.0.1) (2026-02-16)
 
 
