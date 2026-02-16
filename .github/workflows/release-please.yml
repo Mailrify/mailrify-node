@@ -27,6 +27,7 @@ jobs:
         with:
           release-type: node
           target-branch: main
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
   publish:
     needs: release-please
