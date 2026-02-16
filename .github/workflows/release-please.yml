@@ -41,7 +41,7 @@ jobs:
           ref: ${{ needs.release-please.outputs.tag_name }}
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
@@ -52,7 +52,6 @@ jobs:
           npm publish --provenance --access public
         env:
           NPM_CONFIG_PROVENANCE: true
-          NPM_CONFIG_AUTH_TYPE: oauth
 
   publish-manual:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -66,7 +65,7 @@ jobs:
           ref: ${{ inputs.publish_ref }}
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
       - run: npm run build
@@ -77,4 +76,3 @@ jobs:
           npm publish --provenance --access public
         env:
           NPM_CONFIG_PROVENANCE: true
-          NPM_CONFIG_AUTH_TYPE: oauth
