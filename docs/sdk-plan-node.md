@@ -83,6 +83,7 @@ interface SendEmailParams {
   from: string | { name?: string; email: string };
   subject?: string;
   body?: string;
+  text?: string;
   template?: string;
   data?: Record<string, unknown>;
   headers?: Record<string, string>;
@@ -292,6 +293,7 @@ const result = await client.emails.send({
   from: { name: 'My App', email: 'hello@myapp.com' },
   subject: 'Welcome!',
   body: '<h1>Hello {{name}}</h1>',
+  text: 'Hello {{name}}',
   data: { name: 'John' },
 });
 

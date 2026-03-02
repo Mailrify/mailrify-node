@@ -22,6 +22,13 @@ export interface SendEmailParams {
   from: string | Recipient;
   subject?: string;
   body?: string;
+  /**
+   * The plain text version of the message.
+   *
+   * If not provided, the `body` will be used to generate a plain text version.
+   * You can opt out of this behavior by setting value to an empty string.
+   */
+  text?: string;
   template?: string;
   data?: Record<string, unknown>;
   headers?: Record<string, string>;
@@ -293,6 +300,19 @@ export interface ListSegmentContactsResponse {
   page: number;
   pageSize: number;
   totalPages: number;
+}
+
+export interface StaticSegmentMembersParams {
+  emails: string[];
+}
+
+export interface AddStaticSegmentMembersResponse {
+  added: number;
+  notFound: string[];
+}
+
+export interface RemoveStaticSegmentMembersResponse {
+  removed: number;
 }
 
 export interface ApiErrorPayload {

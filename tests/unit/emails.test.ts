@@ -106,6 +106,58 @@ describe('emails resource', () => {
     expect(JSON.parse(String(init.body)).attachments[0].filename).toBe('invoice.pdf');
   });
 
+  it('send() includes text when provided', async () => {
+    const fetchMock = installFetchMock([
+      jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
+    ]);
+    const client = new Mailrify('sk_test_123');
+
+    await client.emails.send({
+      to: 'user@example.com',
+      from: 'hello@example.com',
+      body: '<p>Hi</p>',
+      text: 'Hi'
+    });
+
+    const { init } = getRequest(fetchMock);
+    expect(JSON.parse(String(init.body)).text).toBe('Hi');
+  });
+
+  it('send() omits text when undefined', async () => {
+    const fetchMock = installFetchMock([
+      jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
+    ]);
+    const client = new Mailrify('sk_test_123');
+
+    await client.emails.send({
+      to: 'user@example.com',
+      from: 'hello@example.com',
+      body: '<p>Hi</p>',
+      text: undefined
+    });
+
+    const { init } = getRequest(fetchMock);
+    const payload = JSON.parse(String(init.body)) as { text?: string };
+    expect('text' in payload).toBe(false);
+  });
+
+  it('send() sends empty string when text is empty string', async () => {
+    const fetchMock = installFetchMock([
+      jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
+    ]);
+    const client = new Mailrify('sk_test_123');
+
+    await client.emails.send({
+      to: 'user@example.com',
+      from: 'hello@example.com',
+      body: '<p>Hi</p>',
+      text: ''
+    });
+
+    const { init } = getRequest(fetchMock);
+    expect(JSON.parse(String(init.body)).text).toBe('');
+  });
+
   it('send() throws ValidationError on 400', async () => {
     installFetchMock([jsonResponse({ message: 'to is required' }, 400)]);
     const client = new Mailrify('sk_test_123');

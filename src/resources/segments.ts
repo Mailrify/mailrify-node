@@ -1,9 +1,12 @@
 import { HttpClient } from '../http';
 import type {
+  AddStaticSegmentMembersResponse,
   CreateSegmentParams,
   ListSegmentContactsParams,
   ListSegmentContactsResponse,
+  RemoveStaticSegmentMembersResponse,
   Segment,
+  StaticSegmentMembersParams,
   UpdateSegmentParams
 } from '../types';
 
@@ -45,6 +48,23 @@ export class SegmentsResource {
   async listContacts(id: string, params: ListSegmentContactsParams = {}): Promise<ListSegmentContactsResponse> {
     return this.http.get<ListSegmentContactsResponse>(`/segments/${id}/contacts`, {
       query: params,
+      authMode: 'secret'
+    });
+  }
+
+  async addStaticMembers(id: string, params: StaticSegmentMembersParams): Promise<AddStaticSegmentMembersResponse> {
+    return this.http.post<AddStaticSegmentMembersResponse>(`/segments/${id}/members`, {
+      body: params,
+      authMode: 'secret'
+    });
+  }
+
+  async removeStaticMembers(
+    id: string,
+    params: StaticSegmentMembersParams
+  ): Promise<RemoveStaticSegmentMembersResponse> {
+    return this.http.delete<RemoveStaticSegmentMembersResponse>(`/segments/${id}/members`, {
+      body: params,
       authMode: 'secret'
     });
   }

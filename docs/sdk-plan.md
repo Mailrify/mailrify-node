@@ -24,7 +24,7 @@ Source of truth: [openapi.json](../apps/docs/openapi.json) (OpenAPI 3.0.3)
 | `POST` | `/v1/send` | `sendEmail` | `emails.send(params)` |
 | `POST` | `/v1/verify` | `verifyEmail` | `emails.verify(email)` |
 
-**Send** request: `to` (string | object | array), `from` (string | object), `subject?`, `body?`, `template?`, `data?`, `headers?`, `reply?`, `attachments?[]`, `subscribed?`, `name?`
+**Send** request: `to` (string | object | array), `from` (string | object), `subject?`, `body?`, `text?`, `template?`, `data?`, `headers?`, `reply?`, `attachments?[]`, `subscribed?`, `name?`
 
 **Verify** request: `email` (required). Response includes: `valid`, `isDisposable`, `isAlias`, `isTypo`, `isPlusAddressed`, `isRandomInput`, `isPersonalEmail`, `domainExists`, `hasWebsite`, `hasMxRecords`, `suggestedEmail?`, `reasons[]`.
 

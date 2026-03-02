@@ -30,12 +30,31 @@ const tracker = new Mailrify('pk_your_public_key');
 ## Emails
 
 ```ts
+// HTML + explicit text
 const result = await client.emails.send({
   to: 'user@example.com',
   from: { name: 'My App', email: 'hello@myapp.com' },
   subject: 'Welcome!',
   body: '<h1>Hello {{name}}</h1>',
+  text: 'Hello {{name}}',
   data: { name: 'John' }
+});
+
+// HTML only (backend auto-generates text from body)
+await client.emails.send({
+  to: 'user@example.com',
+  from: 'hello@myapp.com',
+  subject: 'HTML only',
+  body: '<h1>Hello</h1><p>This is HTML-only content.</p>'
+});
+
+// HTML + text="" (opt out of text/plain part)
+await client.emails.send({
+  to: 'user@example.com',
+  from: 'hello@myapp.com',
+  subject: 'No text/plain part',
+  body: '<h1>Hello</h1>',
+  text: ''
 });
 
 const verification = await client.emails.verify('user@example.com');
