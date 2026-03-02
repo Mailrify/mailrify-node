@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/Mailrify/mailrify-node/compare/v1.0.2...v1.1.0) (2026-03-02)
+
+
+### Features
+
+* Add `text` field to email sending parameters. ([83b71a8](https://github.com/Mailrify/mailrify-node/commit/83b71a80e3fb02a93d965283e1da260d244bff15))
+* Implement methods to add and remove contacts from static segments, along with supporting types and documentation. ([5775f98](https://github.com/Mailrify/mailrify-node/commit/5775f9828d1ae808d72f92342a080ed59376188f))
+
 ## [1.0.2](https://github.com/Mailrify/mailrify-node/compare/v1.0.1...v1.0.2) (2026-02-16)
 
 
