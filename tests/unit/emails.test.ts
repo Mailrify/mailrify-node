@@ -128,12 +128,13 @@ describe('emails resource', () => {
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
     const client = new Mailrify('sk_test_123');
+    const text: string | undefined = undefined;
 
     await client.emails.send({
       to: 'user@example.com',
       from: 'hello@example.com',
       body: '<p>Hi</p>',
-      text: undefined
+      ...(text !== undefined ? { text } : {})
     });
 
     const { init } = getRequest(fetchMock);

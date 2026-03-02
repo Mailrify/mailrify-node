@@ -117,4 +117,35 @@ describe('segments resource', () => {
     expect(url).toContain('page=2');
     expect(url).toContain('pageSize=5');
   });
+
+  it('addStaticMembers() sends emails and returns added/notFound', async () => {
+    const fetchMock = installFetchMock([jsonResponse({ added: 2, notFound: ['missing@example.com'] })]);
+    const client = new Mailrify('sk_test_123');
+
+    const result = await client.segments.addStaticMembers('seg_123', {
+      emails: ['alice@example.com', 'bob@example.com']
+    });
+
+    expect(result.added).toBe(2);
+    expect(result.notFound).toEqual(['missing@example.com']);
+    const { url, init } = getRequest(fetchMock);
+    expect(url).toContain('/segments/seg_123/members');
+    expect(init.method).toBe('POST');
+    expect(JSON.parse(String(init.body)).emails).toEqual(['alice@example.com', 'bob@example.com']);
+  });
+
+  it('removeStaticMembers() sends emails with DELETE and returns removed count', async () => {
+    const fetchMock = installFetchMock([jsonResponse({ removed: 1 })]);
+    const client = new Mailrify('sk_test_123');
+
+    const result = await client.segments.removeStaticMembers('seg_123', {
+      emails: ['alice@example.com']
+    });
+
+    expect(result.removed).toBe(1);
+    const { url, init } = getRequest(fetchMock);
+    expect(url).toContain('/segments/seg_123/members');
+    expect(init.method).toBe('DELETE');
+    expect(JSON.parse(String(init.body)).emails).toEqual(['alice@example.com']);
+  });
 });

@@ -185,6 +185,19 @@ interface ListSegmentContactsParams {
   pageSize?: number;
 }
 
+interface StaticSegmentMembersParams {
+  emails: string[];
+}
+
+interface AddStaticSegmentMembersResponse {
+  added: number;
+  notFound: string[];
+}
+
+interface RemoveStaticSegmentMembersResponse {
+  removed: number;
+}
+
 // Campaigns
 type CampaignStatus = 'DRAFT' | 'SCHEDULED' | 'SENDING' | 'SENT';
 type AudienceType = 'ALL' | 'SEGMENT' | 'FILTERED';

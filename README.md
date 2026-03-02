@@ -100,6 +100,16 @@ const segment = await client.segments.create({
 });
 
 const members = await client.segments.listContacts(segment.id, { page: 1 });
+
+const addMembersResult = await client.segments.addStaticMembers(segment.id, {
+  emails: ['alice@example.com', 'bob@example.com']
+});
+console.log(addMembersResult.added, addMembersResult.notFound);
+
+const removeMembersResult = await client.segments.removeStaticMembers(segment.id, {
+  emails: ['alice@example.com']
+});
+console.log(removeMembersResult.removed);
 ```
 
 ## Campaigns

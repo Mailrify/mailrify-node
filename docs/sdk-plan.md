@@ -78,6 +78,8 @@ Send accepts optional `scheduledFor` (ISO 8601) — omit for immediate send.
 | `PATCH` | `/segments/{id}` | `updateSegment` | `segments.update(id, params)` |
 | `DELETE` | `/segments/{id}` | `deleteSegment` | `segments.delete(id)` |
 | `GET` | `/segments/{id}/contacts` | `listSegmentContacts` | `segments.listContacts(id, params?)` |
+| `POST` | `/segments/{id}/members` | `addStaticSegmentMembers` | `segments.addStaticMembers(id, { emails })` |
+| `DELETE` | `/segments/{id}/members` | `removeStaticSegmentMembers` | `segments.removeStaticMembers(id, { emails })` |
 
 Segment contacts pagination: Page-based (`page`, `pageSize`, `total`, `totalPages`).
 
@@ -201,6 +203,8 @@ Retry: max 3, exponential backoff `1s → 2s → 4s` with jitter, respect `Retry
 6. `delete()` — 204
 7. `listContacts()` — paginated
 8. `listContacts()` — with params
+9. `addStaticMembers()` — adds contacts by email
+10. `removeStaticMembers()` — removes contacts by email
 
 **Cross-cutting:**
 1. Bearer auth header
