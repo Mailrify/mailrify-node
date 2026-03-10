@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import Mailrify, { NotFoundError, ValidationError } from '../../src';
+import MailGlyph, { NotFoundError, ValidationError } from '../../src';
 import type { CreateCampaignParams } from '../../src';
 import { getRequest, installFetchMock, jsonResponse } from './test-utils';
 
@@ -40,7 +40,7 @@ describe('campaigns resource', () => {
 
   it('list() returns paginated campaigns', async () => {
     installFetchMock([jsonResponse({ data: [campaign], page: 1, pageSize: 20, total: 1, totalPages: 1 })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.list();
 
@@ -50,7 +50,7 @@ describe('campaigns resource', () => {
 
   it('list() supports page/pageSize/status query params', async () => {
     const fetchMock = installFetchMock([jsonResponse({ data: [], page: 2, pageSize: 10, total: 0, totalPages: 0 })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.campaigns.list({ page: 2, pageSize: 10, status: 'CANCELLED' });
 
@@ -62,7 +62,7 @@ describe('campaigns resource', () => {
 
   it('create() works with required fields', async () => {
     installFetchMock([jsonResponse({ success: true, data: campaign }, 201)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.create({
       name: 'Launch',
@@ -77,7 +77,7 @@ describe('campaigns resource', () => {
 
   it('create() throws ValidationError on 400', async () => {
     installFetchMock([jsonResponse({ message: 'subject is required' }, 400)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(
       client.campaigns.create({
@@ -91,7 +91,7 @@ describe('campaigns resource', () => {
 
   it('get() returns campaign by ID', async () => {
     installFetchMock([jsonResponse({ success: true, data: campaign })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.get('cmp_123');
 
@@ -100,14 +100,14 @@ describe('campaigns resource', () => {
 
   it('get() throws NotFoundError on 404', async () => {
     installFetchMock([jsonResponse({ message: 'Campaign not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.campaigns.get('missing')).rejects.toBeInstanceOf(NotFoundError);
   });
 
   it('update() performs partial update', async () => {
     installFetchMock([jsonResponse({ success: true, data: { ...campaign, subject: 'Updated' } })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.update('cmp_123', { subject: 'Updated' });
 
@@ -116,7 +116,7 @@ describe('campaigns resource', () => {
 
   it('update() supports audienceCondition filter schema', async () => {
     const fetchMock = installFetchMock([jsonResponse({ success: true, data: campaign })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.campaigns.update('cmp_123', {
       audienceCondition: {
@@ -131,7 +131,7 @@ describe('campaigns resource', () => {
 
   it('send() supports immediate send without scheduledFor', async () => {
     const fetchMock = installFetchMock([jsonResponse({ success: true, message: 'Sending' })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.send('cmp_123');
 
@@ -142,7 +142,7 @@ describe('campaigns resource', () => {
 
   it('send() supports scheduled send', async () => {
     const fetchMock = installFetchMock([jsonResponse({ success: true, message: 'Scheduled' })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.campaigns.send('cmp_123', { scheduledFor: '2026-03-01T10:00:00Z' });
 
@@ -152,7 +152,7 @@ describe('campaigns resource', () => {
 
   it('cancel() cancels a scheduled campaign', async () => {
     installFetchMock([jsonResponse({ success: true, data: { ...campaign, status: 'DRAFT' }, message: 'Cancelled' })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.cancel('cmp_123');
 
@@ -161,14 +161,14 @@ describe('campaigns resource', () => {
 
   it('cancel() throws NotFoundError on missing campaign', async () => {
     installFetchMock([jsonResponse({ message: 'Campaign not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.campaigns.cancel('missing')).rejects.toBeInstanceOf(NotFoundError);
   });
 
   it('test() sends campaign test email', async () => {
     installFetchMock([jsonResponse({ success: true, message: 'Test email sent' })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.test('cmp_123', 'preview@example.com');
 
@@ -177,14 +177,14 @@ describe('campaigns resource', () => {
 
   it('test() throws ValidationError when email missing', async () => {
     installFetchMock([jsonResponse({ message: 'email is required' }, 400)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.campaigns.test('cmp_123', '')).rejects.toBeInstanceOf(ValidationError);
   });
 
   it('stats() returns analytics payload', async () => {
     installFetchMock([jsonResponse({ success: true, data: { sent: 100, opens: 60, clicks: 25 } })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.stats('cmp_123');
 
@@ -193,7 +193,7 @@ describe('campaigns resource', () => {
 
   it('stats() throws NotFoundError on missing campaign', async () => {
     installFetchMock([jsonResponse({ message: 'Campaign not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.campaigns.stats('missing')).rejects.toBeInstanceOf(NotFoundError);
   });

@@ -1,7 +1,7 @@
-import { ApiError, AuthenticationError, MailrifyError, createMailrifyError } from './errors';
+import { ApiError, AuthenticationError, MailGlyphError, createMailGlyphError } from './errors';
 import type { ApiKeyType, ApiErrorPayload, RequestOptions } from './types';
 
-const DEFAULT_BASE_URL = 'https://api.mailrify.com';
+const DEFAULT_BASE_URL = 'https://api.mailglyph.com';
 const DEFAULT_TIMEOUT_MS = 30_000;
 const MAX_RETRIES = 3;
 const SDK_VERSION = '0.1.0';
@@ -28,7 +28,7 @@ export class HttpClient {
     this.fetchFn = config.fetchFn ?? fetch;
     this.baseUrl = config.baseUrl ?? DEFAULT_BASE_URL;
     this.timeout = config.timeout ?? DEFAULT_TIMEOUT_MS;
-    this.userAgent = `mailrify-node/${SDK_VERSION}`;
+    this.userAgent = `mailglyph-node/${SDK_VERSION}`;
 
     if (this.apiKey.startsWith('sk_')) {
       this.keyType = 'secret';
@@ -117,9 +117,9 @@ export class HttpClient {
         }
 
         const errorPayload = isApiErrorPayload(payload) ? payload : undefined;
-        throw createMailrifyError(response.status, errorPayload, retryAfterSeconds ?? undefined);
+        throw createMailGlyphError(response.status, errorPayload, retryAfterSeconds ?? undefined);
       } catch (error) {
-        if (error instanceof MailrifyError) {
+        if (error instanceof MailGlyphError) {
           throw error;
         }
 
@@ -134,7 +134,7 @@ export class HttpClient {
           continue;
         }
 
-        throw new MailrifyError('Network request failed', {
+        throw new MailGlyphError('Network request failed', {
           details: {
             cause: error
           }

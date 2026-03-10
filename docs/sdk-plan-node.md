@@ -1,6 +1,6 @@
-# Mailrify Node.js / TypeScript SDK Plan
+# MailGlyph Node.js / TypeScript SDK Plan
 
-> Shared spec: [sdk-plan.md](./sdk-plan.md) · Repo: [Mailrify/mailrify-node](https://github.com/Mailrify/mailrify-node) · Registry: [npm `mailrify`](https://www.npmjs.com/package/mailrify) · Min: Node 18+
+> Shared spec: [sdk-plan.md](./sdk-plan.md) · Repo: [MailGlyph/mailglyph-node](https://github.com/MailGlyph/mailglyph-node) · Registry: [npm `mailglyph`](https://www.npmjs.com/package/mailglyph) · Min: Node 18+
 
 ---
 
@@ -20,9 +20,9 @@
 ## Repository Structure
 
 ```
-mailrify-node/
+mailglyph-node/
 ├── src/
-│   ├── index.ts                 # Main export: Mailrify class
+│   ├── index.ts                 # Main export: MailGlyph class
 │   ├── client.ts                # Client config & initialization
 │   ├── http.ts                  # HttpClient (fetch-based)
 │   ├── errors.ts                # Error classes
@@ -71,9 +71,9 @@ Key interfaces to define:
 
 ```typescript
 // Client config
-interface MailrifyConfig {
+interface MailGlyphConfig {
   apiKey: string;
-  baseUrl?: string;  // default: https://api.mailrify.com
+  baseUrl?: string;  // default: https://api.mailglyph.com
   timeout?: number;  // default: 30000
 }
 
@@ -255,7 +255,7 @@ interface SendCampaignParams {
 | Scope | Command |
 |-------|---------|
 | Unit | `npm test` |
-| Integration | `MAILRIFY_API_KEY=sk_... npm run test:integration` |
+| Integration | `MAILGLYPH_API_KEY=sk_... npm run test:integration` |
 | Lint | `npm run lint` |
 | Type check | `npm run typecheck` |
 | Build | `npm run build` |
@@ -266,7 +266,7 @@ interface SendCampaignParams {
 
 ```json
 {
-  "name": "mailrify",
+  "name": "mailglyph",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -295,10 +295,10 @@ interface SendCampaignParams {
 ## Usage Examples (for README)
 
 ```typescript
-import Mailrify from 'mailrify';
+import MailGlyph from 'mailglyph';
 
 // Initialize with secret key
-const client = new Mailrify('sk_your_api_key');
+const client = new MailGlyph('sk_your_api_key');
 
 // Send email
 const result = await client.emails.send({
@@ -315,7 +315,7 @@ const verification = await client.emails.verify('user@example.com');
 console.log(verification.data.valid, verification.data.isRandomInput);
 
 // Track event (use public key)
-const tracker = new Mailrify('pk_your_public_key');
+const tracker = new MailGlyph('pk_your_public_key');
 await tracker.events.track({
   email: 'user@example.com',
   event: 'purchase',

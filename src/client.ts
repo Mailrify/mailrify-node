@@ -1,3 +1,3 @@
-import Mailrify from './index';
+import MailGlyph from './index';
 
-export default Mailrify;
+export default MailGlyph;

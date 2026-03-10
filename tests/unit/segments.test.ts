@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import Mailrify, { NotFoundError } from '../../src';
+import MailGlyph, { NotFoundError } from '../../src';
 import { getRequest, installFetchMock, jsonResponse, emptyResponse } from './test-utils';
 
 const segment = {
@@ -35,7 +35,7 @@ describe('segments resource', () => {
 
   it('list() returns segments', async () => {
     installFetchMock([jsonResponse([segment])]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.list();
 
@@ -45,7 +45,7 @@ describe('segments resource', () => {
 
   it('create() sends condition payload', async () => {
     const fetchMock = installFetchMock([jsonResponse(segment, 201)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.create({
       name: 'Premium Users',
@@ -63,7 +63,7 @@ describe('segments resource', () => {
 
   it('get() returns segment by ID', async () => {
     installFetchMock([jsonResponse(segment)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.get('seg_123');
 
@@ -72,14 +72,14 @@ describe('segments resource', () => {
 
   it('get() throws NotFoundError on 404', async () => {
     installFetchMock([jsonResponse({ message: 'Segment not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.segments.get('missing')).rejects.toBeInstanceOf(NotFoundError);
   });
 
   it('update() updates segment conditions', async () => {
     installFetchMock([jsonResponse({ ...segment, name: 'VIP Users' })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.update('seg_123', { name: 'VIP Users' });
 
@@ -88,7 +88,7 @@ describe('segments resource', () => {
 
   it('delete() succeeds with 204', async () => {
     installFetchMock([emptyResponse(204)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.segments.delete('seg_123')).resolves.toBeUndefined();
   });
@@ -97,7 +97,7 @@ describe('segments resource', () => {
     installFetchMock([
       jsonResponse({ data: [contact], total: 1, page: 1, pageSize: 20, totalPages: 1 })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.listContacts('seg_123');
 
@@ -109,7 +109,7 @@ describe('segments resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ data: [contact], total: 1, page: 2, pageSize: 5, totalPages: 1 })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.segments.listContacts('seg_123', { page: 2, pageSize: 5 });
 
@@ -120,7 +120,7 @@ describe('segments resource', () => {
 
   it('addStaticMembers() sends emails and returns added/notFound', async () => {
     const fetchMock = installFetchMock([jsonResponse({ added: 2, notFound: ['missing@example.com'] })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.addStaticMembers('seg_123', {
       emails: ['alice@example.com', 'bob@example.com']
@@ -136,7 +136,7 @@ describe('segments resource', () => {
 
   it('removeStaticMembers() sends emails with DELETE and returns removed count', async () => {
     const fetchMock = installFetchMock([jsonResponse({ removed: 1 })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.segments.removeStaticMembers('seg_123', {
       emails: ['alice@example.com']

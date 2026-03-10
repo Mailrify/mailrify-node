@@ -1,6 +1,6 @@
 import type { ApiErrorPayload } from './types';
 
-export class MailrifyError extends Error {
+export class MailGlyphError extends Error {
   public readonly status: number | undefined;
   public readonly code: number | undefined;
   public readonly details: unknown;
@@ -10,14 +10,14 @@ export class MailrifyError extends Error {
     options?: { status?: number | undefined; code?: number | undefined; details?: unknown | undefined }
   ) {
     super(message);
-    this.name = 'MailrifyError';
+    this.name = 'MailGlyphError';
     this.status = options?.status;
     this.code = options?.code;
     this.details = options?.details;
   }
 }
 
-export class AuthenticationError extends MailrifyError {
+export class AuthenticationError extends MailGlyphError {
   constructor(
     message = 'Authentication failed',
     options?: { status?: number | undefined; code?: number | undefined; details?: unknown | undefined }
@@ -27,7 +27,7 @@ export class AuthenticationError extends MailrifyError {
   }
 }
 
-export class ValidationError extends MailrifyError {
+export class ValidationError extends MailGlyphError {
   constructor(
     message = 'Validation failed',
     options?: { status?: number | undefined; code?: number | undefined; details?: unknown | undefined }
@@ -37,7 +37,7 @@ export class ValidationError extends MailrifyError {
   }
 }
 
-export class NotFoundError extends MailrifyError {
+export class NotFoundError extends MailGlyphError {
   constructor(
     message = 'Resource not found',
     options?: { status?: number | undefined; code?: number | undefined; details?: unknown | undefined }
@@ -47,7 +47,7 @@ export class NotFoundError extends MailrifyError {
   }
 }
 
-export class RateLimitError extends MailrifyError {
+export class RateLimitError extends MailGlyphError {
   public readonly retryAfter: number | undefined;
 
   constructor(
@@ -65,7 +65,7 @@ export class RateLimitError extends MailrifyError {
   }
 }
 
-export class ApiError extends MailrifyError {
+export class ApiError extends MailGlyphError {
   constructor(
     message = 'API error',
     options?: { status?: number | undefined; code?: number | undefined; details?: unknown | undefined }
@@ -75,11 +75,11 @@ export class ApiError extends MailrifyError {
   }
 }
 
-export function createMailrifyError(
+export function createMailGlyphError(
   status: number,
   payload?: ApiErrorPayload,
   retryAfter?: number
-): MailrifyError {
+): MailGlyphError {
   const message = payload?.message ?? payload?.error ?? `Request failed with status ${status}`;
   const base: { status: number; code?: number; details?: unknown } = { status };
 
@@ -111,5 +111,5 @@ export function createMailrifyError(
     return new ApiError(message, base);
   }
 
-  return new MailrifyError(message, base);
+  return new MailGlyphError(message, base);
 }

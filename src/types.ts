@@ -1,4 +1,4 @@
-export interface MailrifyConfig {
+export interface MailGlyphConfig {
   apiKey: string;
   baseUrl?: string;
   timeout?: number;

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import Mailrify, { NotFoundError } from '../../src';
+import MailGlyph, { NotFoundError } from '../../src';
 import { getRequest, installFetchMock, jsonResponse, emptyResponse } from './test-utils';
 
 const baseContact = {
@@ -27,7 +27,7 @@ describe('contacts resource', () => {
         total: 100
       })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.list({ limit: 1 });
 
@@ -38,7 +38,7 @@ describe('contacts resource', () => {
 
   it('list() supports filters', async () => {
     const fetchMock = installFetchMock([jsonResponse({ contacts: [], hasMore: false })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.contacts.list({ subscribed: true, search: 'john', limit: 10 });
 
@@ -50,7 +50,7 @@ describe('contacts resource', () => {
 
   it('get() returns a single contact', async () => {
     installFetchMock([jsonResponse(baseContact)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.get('c_123');
 
@@ -59,14 +59,14 @@ describe('contacts resource', () => {
 
   it('get() throws NotFoundError on 404', async () => {
     installFetchMock([jsonResponse({ message: 'Contact not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.contacts.get('missing')).rejects.toBeInstanceOf(NotFoundError);
   });
 
   it('create() supports new contact response (_meta.isNew)', async () => {
     installFetchMock([jsonResponse({ ...baseContact, _meta: { isNew: true, isUpdate: false } }, 201)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.create({ email: 'user@example.com' });
 
@@ -75,7 +75,7 @@ describe('contacts resource', () => {
 
   it('create() supports upsert response (_meta.isUpdate)', async () => {
     installFetchMock([jsonResponse({ ...baseContact, _meta: { isNew: false, isUpdate: true } }, 200)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.create({ email: 'user@example.com' });
 
@@ -84,7 +84,7 @@ describe('contacts resource', () => {
 
   it('update() supports subscribed-only updates', async () => {
     installFetchMock([jsonResponse({ ...baseContact, subscribed: false })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.update('c_123', { subscribed: false });
 
@@ -93,7 +93,7 @@ describe('contacts resource', () => {
 
   it('update() supports custom data updates', async () => {
     const fetchMock = installFetchMock([jsonResponse({ ...baseContact, data: { plan: 'premium' } })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.contacts.update('c_123', { data: { plan: 'premium' } });
 
@@ -104,21 +104,21 @@ describe('contacts resource', () => {
 
   it('delete() succeeds with 204', async () => {
     installFetchMock([emptyResponse(204)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.contacts.delete('c_123')).resolves.toBeUndefined();
   });
 
   it('delete() throws NotFoundError on 404', async () => {
     installFetchMock([jsonResponse({ message: 'Contact not found' }, 404)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.contacts.delete('missing')).rejects.toBeInstanceOf(NotFoundError);
   });
 
   it('count() returns total from list response', async () => {
     installFetchMock([jsonResponse({ contacts: [baseContact], hasMore: false, total: 42 })]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const count = await client.contacts.count({ subscribed: true });
 

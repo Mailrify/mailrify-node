@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project
-This is the official Mailrify Node.js / TypeScript SDK. See `./docs/` for the full specification.
+This is the official MailGlyph Node.js / TypeScript SDK. See `./docs/` for the full specification.
 
 ## Context Files (read these FIRST)
 1. [sdk-plan.md](./docs/sdk-plan.md) — Shared API spec, all 22 endpoints, auth rules, error hierarchy, testing strategy, release-please setup
@@ -9,9 +9,9 @@ This is the official Mailrify Node.js / TypeScript SDK. See `./docs/` for the fu
 3. [openapi.json](./docs/openapi.json) — OpenAPI 3.0.3 specification (source of truth for schemas)
 
 ## Build Order
-1. Scaffold: `package.json` (name: `mailrify`), `tsconfig.json`, `tsup.config.ts`, `.gitignore`
+1. Scaffold: `package.json` (name: `mailglyph`), `tsconfig.json`, `tsup.config.ts`, `.gitignore`
 2. Types (`src/types.ts`) — all request/response interfaces from the plan
-3. Error classes (`src/errors.ts`) — `MailrifyError`, `AuthenticationError`, `ValidationError`, `NotFoundError`, `RateLimitError`, `ApiError`
+3. Error classes (`src/errors.ts`) — `MailGlyphError`, `AuthenticationError`, `ValidationError`, `NotFoundError`, `RateLimitError`, `ApiError`
 4. HttpClient (`src/http.ts`) — native `fetch`, Bearer auth, JSON parsing, error mapping, retry with exponential backoff for 429/5xx
 5. Client (`src/index.ts`) — default export, accepts API key + config, exposes `.emails`, `.events`, `.contacts`, `.campaigns`, `.segments`
 6. Resources one at a time with vitest tests:

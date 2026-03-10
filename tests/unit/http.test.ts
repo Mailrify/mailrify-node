@@ -17,22 +17,22 @@ describe('HttpClient', () => {
     await client.get('/contacts', { authMode: 'secret' });
 
     const { init, url } = getRequest(fetchMock);
-    expect(url).toBe('https://api.mailrify.com/contacts');
+    expect(url).toBe('https://api.mailglyph.com/contacts');
 
     const headers = init.headers as Record<string, string>;
     expect(headers.Authorization).toBe('Bearer sk_test_123');
     expect(headers['Content-Type']).toBe('application/json');
-    expect(headers['User-Agent']).toBe('mailrify-node/0.1.0');
+    expect(headers['User-Agent']).toBe('mailglyph-node/0.1.0');
   });
 
   it('uses custom base URL', async () => {
     const fetchMock = installFetchMock([jsonResponse({ contacts: [], hasMore: false })]);
-    const client = new HttpClient({ apiKey: 'sk_test_123', baseUrl: 'https://staging.mailrify.dev' });
+    const client = new HttpClient({ apiKey: 'sk_test_123', baseUrl: 'https://staging.mailglyph.dev' });
 
     await client.get('/contacts', { authMode: 'secret' });
 
     const { url } = getRequest(fetchMock);
-    expect(url).toBe('https://staging.mailrify.dev/contacts');
+    expect(url).toBe('https://staging.mailglyph.dev/contacts');
   });
 
   it('maps HTTP errors to typed exceptions', async () => {

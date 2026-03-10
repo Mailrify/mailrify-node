@@ -1,13 +1,13 @@
-# Mailrify SDK Generation Plan — Overview
+# MailGlyph SDK Generation Plan — Overview
 
-This is the shared specification for all Mailrify API SDKs. Each SDK has its own detailed plan:
+This is the shared specification for all MailGlyph API SDKs. Each SDK has its own detailed plan:
 
 | SDK | Plan | Repo | Registry |
 |-----|------|------|----------|
-| Node.js / TypeScript | [sdk-plan-node.md](./sdk-plan-node.md) | [mailrify-node](https://github.com/Mailrify/mailrify-node) | [npm `mailrify`](https://www.npmjs.com/package/mailrify) |
-| Python | [sdk-plan-python.md](./sdk-plan-python.md) | [mailrify-python](https://github.com/Mailrify/mailrify-python) | [PyPI `mailrify`](https://pypi.org/project/mailrify/) |
-| Go | [sdk-plan-go.md](./sdk-plan-go.md) | [mailrify-go](https://github.com/Mailrify/mailrify-go) | `go get github.com/Mailrify/mailrify-go` |
-| PHP | [sdk-plan-php.md](./sdk-plan-php.md) | [mailrify-php](https://github.com/Mailrify/mailrify-php) | [Packagist `mailrify/mailrify-php`](https://packagist.org/packages/mailrify/mailrify-php) |
+| Node.js / TypeScript | [sdk-plan-node.md](./sdk-plan-node.md) | [mailglyph-node](https://github.com/MailGlyph/mailglyph-node) | [npm `mailglyph`](https://www.npmjs.com/package/mailglyph) |
+| Python | [sdk-plan-python.md](./sdk-plan-python.md) | [mailglyph-python](https://github.com/MailGlyph/mailglyph-python) | [PyPI `mailglyph`](https://pypi.org/project/mailglyph/) |
+| Go | [sdk-plan-go.md](./sdk-plan-go.md) | [mailglyph-go](https://github.com/MailGlyph/mailglyph-go) | `go get github.com/MailGlyph/mailglyph-go` |
+| PHP | [sdk-plan-php.md](./sdk-plan-php.md) | [mailglyph-php](https://github.com/MailGlyph/mailglyph-php) | [Packagist `mailglyph/mailglyph-php`](https://packagist.org/packages/mailglyph/mailglyph-php) |
 
 > Each SDK lives in its **own** GitHub repository — not in this monorepo.
 
@@ -97,7 +97,7 @@ Client constructor parameters:
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
 | `apiKey` | **Yes** | — | `sk_*` or `pk_*` key |
-| `baseUrl` | No | `https://api.mailrify.com` | Custom API base URL |
+| `baseUrl` | No | `https://api.mailglyph.com` | Custom API base URL |
 | `timeout` | No | `30000` (ms) | Request timeout |
 
 Rules:
@@ -105,7 +105,7 @@ Rules:
 2. Throw if `pk_*` used with non-track endpoint
 3. Throw if `sk_*` used with `/v1/track`
 4. Send `Content-Type: application/json`
-5. Send `User-Agent: mailrify-{lang}/{version}`
+5. Send `User-Agent: mailglyph-{lang}/{version}`
 
 ---
 
@@ -117,7 +117,7 @@ Client (config, auth) ──► emails.*
                        ──► contacts.*
                        ──► campaigns.*
                        ──► segments.*
-                       ──► HttpClient (request, retry, errors) ──► Mailrify API
+                       ──► HttpClient (request, retry, errors) ──► MailGlyph API
 ```
 
 | Component | Responsibility |
@@ -126,7 +126,7 @@ Client (config, auth) ──► emails.*
 | **HttpClient** | Transport, auth injection, error parsing, retry. |
 | **Resources** | `Emails`, `Events`, `Contacts`, `Campaigns`, `Segments` |
 | **Types/Models** | Typed request/response objects from OpenAPI. |
-| **Errors** | `MailrifyError` → `AuthenticationError`, `ValidationError`, `NotFoundError`, `RateLimitError`, `ApiError` |
+| **Errors** | `MailGlyphError` → `AuthenticationError`, `ValidationError`, `NotFoundError`, `RateLimitError`, `ApiError` |
 
 ### Error mapping
 
@@ -215,7 +215,7 @@ Retry: max 3, exponential backoff `1s → 2s → 4s` with jitter, respect `Retry
 
 ### Integration tests (env-gated)
 
-Require `MAILRIFY_API_KEY` and optionally `MAILRIFY_BASE_URL`:
+Require `MAILGLYPH_API_KEY` and optionally `MAILGLYPH_BASE_URL`:
 
 1. Contact CRUD lifecycle
 2. Campaign lifecycle: create → update → send test → schedule → cancel
@@ -282,7 +282,7 @@ All SDKs use **release-please** (via GitHub Action) for fully automated versioni
 | SDK | release-please strategy | Version file(s) updated |
 |-----|------------------------|------------------------|
 | Node.js | `node` | `package.json` |
-| Python | `python` | `pyproject.toml`, `src/mailrify/__init__.py` |
+| Python | `python` | `pyproject.toml`, `src/mailglyph/__init__.py` |
 | Go | `go` | tag only (Go convention) |
 | PHP | `php` | `composer.json` |
 
@@ -290,10 +290,10 @@ All SDKs use **release-please** (via GitHub Action) for fully automated versioni
 
 | SDK | Repository | Package Registry |
 |-----|-----------|------------------|
-| Node.js | https://github.com/Mailrify/mailrify-node | https://www.npmjs.com/package/mailrify |
-| Python | https://github.com/Mailrify/mailrify-python | https://pypi.org/project/mailrify/ |
-| Go | https://github.com/Mailrify/mailrify-go | `go get github.com/Mailrify/mailrify-go` |
-| PHP | https://github.com/Mailrify/mailrify-php | https://packagist.org/packages/mailrify/mailrify-php |
+| Node.js | https://github.com/MailGlyph/mailglyph-node | https://www.npmjs.com/package/mailglyph |
+| Python | https://github.com/MailGlyph/mailglyph-python | https://pypi.org/project/mailglyph/ |
+| Go | https://github.com/MailGlyph/mailglyph-go | `go get github.com/MailGlyph/mailglyph-go` |
+| PHP | https://github.com/MailGlyph/mailglyph-php | https://packagist.org/packages/mailglyph/mailglyph-php |
 
 > **Note:** These repos contain legacy code that will be replaced. Start with a clean `main` branch.
 

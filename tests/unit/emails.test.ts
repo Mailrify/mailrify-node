@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import Mailrify, { ValidationError } from '../../src';
+import MailGlyph, { ValidationError } from '../../src';
 import type { SendEmailParams } from '../../src';
 import { getRequest, installFetchMock, jsonResponse } from './test-utils';
 
@@ -17,7 +17,7 @@ describe('emails resource', () => {
         data: { emails: [{ contact: { id: 'c1', email: 'user@example.com' }, email: 'e1' }], timestamp: '2026-01-01T00:00:00Z' }
       })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.emails.send({
       to: 'user@example.com',
@@ -35,7 +35,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: { name: 'Jane', email: 'jane@example.com' },
@@ -54,7 +54,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: ['one@example.com', { name: 'Two', email: 'two@example.com' }],
@@ -70,7 +70,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: 'user@example.com',
@@ -87,7 +87,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: 'user@example.com',
@@ -110,7 +110,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: 'user@example.com',
@@ -127,7 +127,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
     const text: string | undefined = undefined;
 
     await client.emails.send({
@@ -146,7 +146,7 @@ describe('emails resource', () => {
     const fetchMock = installFetchMock([
       jsonResponse({ success: true, data: { emails: [], timestamp: '2026-01-01T00:00:00Z' } })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await client.emails.send({
       to: 'user@example.com',
@@ -161,7 +161,7 @@ describe('emails resource', () => {
 
   it('send() throws ValidationError on 400', async () => {
     installFetchMock([jsonResponse({ message: 'to is required' }, 400)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.emails.send({ from: 'hello@example.com' } as SendEmailParams)).rejects.toBeInstanceOf(
       ValidationError
@@ -188,7 +188,7 @@ describe('emails resource', () => {
         }
       })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.emails.verify('user@gmail.com');
 
@@ -217,7 +217,7 @@ describe('emails resource', () => {
         }
       })
     ]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     const result = await client.emails.verify('user@gmial.com');
 
@@ -227,7 +227,7 @@ describe('emails resource', () => {
 
   it('verify() throws ValidationError on invalid email', async () => {
     installFetchMock([jsonResponse({ message: 'Invalid email format' }, 400)]);
-    const client = new Mailrify('sk_test_123');
+    const client = new MailGlyph('sk_test_123');
 
     await expect(client.emails.verify('bad')).rejects.toBeInstanceOf(ValidationError);
   });

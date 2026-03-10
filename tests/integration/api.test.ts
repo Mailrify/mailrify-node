@@ -1,17 +1,17 @@
 import { describe, expect, it } from 'vitest';
 
-import Mailrify, { MailrifyError, NotFoundError } from '../../src';
+import MailGlyph, { MailGlyphError, NotFoundError } from '../../src';
 
-const secretKey = process.env.MAILRIFY_API_KEY;
-const publicKey = process.env.MAILRIFY_PUBLIC_KEY;
-const baseUrl = process.env.MAILRIFY_BASE_URL;
-const testDomain = process.env.MAILRIFY_TEST_DOMAIN ?? 'mailrify.com';
-const testMemberEmail = process.env.MAILRIFY_TEST_MEMBER_EMAIL ?? 'info@mailrify.com';
+const secretKey = process.env.MAILGLYPH_API_KEY;
+const publicKey = process.env.MAILGLYPH_PUBLIC_KEY;
+const baseUrl = process.env.MAILGLYPH_BASE_URL;
+const testDomain = process.env.MAILGLYPH_TEST_DOMAIN ?? 'mailglyph.com';
+const testMemberEmail = process.env.MAILGLYPH_TEST_MEMBER_EMAIL ?? 'info@mailglyph.com';
 
 const hasIntegrationEnv = Boolean(secretKey && publicKey && baseUrl);
 const maybeDescribe = hasIntegrationEnv ? describe : describe.skip;
 
-maybeDescribe.sequential('integration: local Mailrify API', () => {
+maybeDescribe.sequential('integration: local MailGlyph API', () => {
   it(
     'runs SDK integration scenarios in order',
     async () => {
@@ -20,8 +20,8 @@ maybeDescribe.sequential('integration: local Mailrify API', () => {
         clientConfig.baseUrl = baseUrl;
       }
 
-      const secretClient = new Mailrify(secretKey as string, clientConfig);
-      const publicClient = new Mailrify(publicKey as string, clientConfig);
+      const secretClient = new MailGlyph(secretKey as string, clientConfig);
+      const publicClient = new MailGlyph(publicKey as string, clientConfig);
 
       const uniqueId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
       const contactEmail = `sdk-integration-${uniqueId}@${testDomain}`;
@@ -191,7 +191,7 @@ async function runStep<T>(step: string, fn: () => Promise<T>): Promise<T> {
 }
 
 async function waitForEventName(
-  client: Mailrify,
+  client: MailGlyph,
   expectedName: string,
   maxAttempts: number,
   delayMs: number
@@ -233,7 +233,7 @@ async function cleanupResource(
 }
 
 function formatStepError(step: string, error: unknown): string {
-  if (error instanceof MailrifyError) {
+  if (error instanceof MailGlyphError) {
     return `${step} failed | status=${error.status ?? 'unknown'} | body=${safeStringify(error.details)} | message=${error.message}`;
   }
 
@@ -245,7 +245,7 @@ function formatStepError(step: string, error: unknown): string {
 }
 
 function formatCleanupError(error: unknown): string {
-  if (error instanceof MailrifyError) {
+  if (error instanceof MailGlyphError) {
     return `status=${error.status ?? 'unknown'} body=${safeStringify(error.details)} message=${error.message}`;
   }
 

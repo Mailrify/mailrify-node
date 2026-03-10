@@ -4,9 +4,9 @@ import { ContactsResource } from './resources/contacts';
 import { EmailsResource } from './resources/emails';
 import { EventsResource } from './resources/events';
 import { SegmentsResource } from './resources/segments';
-import type { ApiKeyType, MailrifyConfig } from './types';
+import type { ApiKeyType, MailGlyphConfig } from './types';
 
-export class Mailrify {
+export class MailGlyph {
   public readonly emails: EmailsResource;
   public readonly events: EventsResource;
   public readonly contacts: ContactsResource;
@@ -16,7 +16,7 @@ export class Mailrify {
 
   private readonly http: HttpClient;
 
-  constructor(apiKey: string, config: Omit<MailrifyConfig, 'apiKey'> = {}) {
+  constructor(apiKey: string, config: Omit<MailGlyphConfig, 'apiKey'> = {}) {
     const httpConfig: { apiKey: string; baseUrl?: string; timeout?: number } = { apiKey };
 
     if (config.baseUrl !== undefined) {
@@ -41,4 +41,4 @@ export class Mailrify {
 export * from './errors';
 export type * from './types';
 
-export default Mailrify;
+export default MailGlyph;

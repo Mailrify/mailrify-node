@@ -1,30 +1,30 @@
-# Mailrify Node.js SDK
+# MailGlyph Node.js SDK
 
-[![CI](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Mailrify/mailrify-node/actions/workflows/ci.yml)
-[![Release Please](https://github.com/Mailrify/mailrify-node/actions/workflows/release-please.yml/badge.svg?branch=main)](https://github.com/Mailrify/mailrify-node/actions/workflows/release-please.yml)
+[![CI](https://github.com/MailGlyph/mailglyph-node/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/MailGlyph/mailglyph-node/actions/workflows/ci.yml)
+[![Release Please](https://github.com/MailGlyph/mailglyph-node/actions/workflows/release-please.yml/badge.svg?branch=main)](https://github.com/MailGlyph/mailglyph-node/actions/workflows/release-please.yml)
 
-Official Node.js / TypeScript SDK for the Mailrify API.
+Official Node.js / TypeScript SDK for the MailGlyph API.
 
 ## Install
 
 ```bash
-npm install mailrify
+npm install mailglyph
 ```
 
 ```bash
-yarn add mailrify
+yarn add mailglyph
 ```
 
 ## Initialize
 
 ```ts
-import Mailrify from 'mailrify';
+import MailGlyph from 'mailglyph';
 
 // Secret key client (all endpoints except /v1/track)
-const client = new Mailrify('sk_your_api_key');
+const client = new MailGlyph('sk_your_api_key');
 
 // Public key client (/v1/track only)
-const tracker = new Mailrify('pk_your_public_key');
+const tracker = new MailGlyph('pk_your_public_key');
 ```
 
 ## Emails
@@ -143,8 +143,8 @@ await client.campaigns.cancel(campaign.id);
 ## Configuration
 
 ```ts
-const customClient = new Mailrify('sk_your_api_key', {
-  baseUrl: 'https://api.mailrify.com',
+const customClient = new MailGlyph('sk_your_api_key', {
+  baseUrl: 'https://api.mailglyph.com',
   timeout: 30000
 });
 ```

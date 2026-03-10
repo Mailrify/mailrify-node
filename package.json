@@ -1,7 +1,7 @@
 {
-  "name": "mailrify",
+  "name": "mailglyph",
   "version": "1.1.0",
-  "description": "Official Mailrify Node.js / TypeScript SDK",
+  "description": "Official MailGlyph Node.js / TypeScript SDK",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -30,13 +30,13 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "mailrify",
+    "mailglyph",
     "email",
     "sdk"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mailrify/mailrify-node"
+    "url": "https://github.com/MailGlyph/mailglyph-node"
   },
   "license": "MIT",
   "devDependencies": {
