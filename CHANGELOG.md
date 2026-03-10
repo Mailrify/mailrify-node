@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.1...v1.1.2) (2026-03-10)
+
+
+### Bug Fixes
+
+* trigger next release ([6fbc3af](https://github.com/MailGlyph/mailglyph-node/commit/6fbc3af1a979c02811cba3db73c09fc0d20448a8))
+
 ## [1.1.1](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.0...v1.1.1) (2026-03-10)
 
 
