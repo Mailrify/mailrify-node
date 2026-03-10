@@ -1,6 +1,6 @@
 {
   "name": "mailrify",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Official Mailrify Node.js / TypeScript SDK",
   "type": "module",
   "main": "./dist/index.cjs",
