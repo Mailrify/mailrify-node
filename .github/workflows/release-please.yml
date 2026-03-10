@@ -49,9 +49,17 @@ jobs:
       - run: npm run build
       - run: |
           npm pkg set repository.type=git repository.url=https://github.com/MailGlyph/mailglyph-node
-          unset NODE_AUTH_TOKEN
-          unset NPM_TOKEN
-          unset NPM_CONFIG_AUTH_TYPE
-          npm publish --provenance --access public
+          if [ -n "${NPM_TOKEN:-}" ]; then
+            echo "Publishing with NPM_TOKEN bootstrap mode (no provenance)."
+            npm publish --access public
+          else
+            echo "Publishing with OIDC trusted publishing + provenance."
+            unset NODE_AUTH_TOKEN
+            unset NPM_TOKEN
+            unset NPM_CONFIG_AUTH_TYPE
+            npm publish --provenance --access public
+          fi
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
