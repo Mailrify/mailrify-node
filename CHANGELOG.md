@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.0...v1.1.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* read from dot env ([3209951](https://github.com/MailGlyph/mailglyph-node/commit/3209951240171cb13e53487066a975d82e81c892))
+
 ## [1.1.0](https://github.com/MailGlyph/mailglyph-node/compare/v1.0.2...v1.1.0) (2026-03-02)
 
 
