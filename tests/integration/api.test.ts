@@ -85,11 +85,10 @@ maybeDescribe.sequential('integration: local MailGlyph API', () => {
           const updated = await secretClient.contacts.update(created.id, {
             data: { source: 'sdk-test', updated: true }
           });
-          expect(updated.data.source).toBe('sdk-test');
-          expect(updated.data.updated).toBe(true);
+          expect(updated.data).toMatchObject({ source: 'sdk-test', updated: true });
 
           const listed = await secretClient.contacts.list({ limit: 10 });
-          expect((listed.total ?? listed.contacts.length) > 0).toBe(true);
+          expect((listed.total ?? listed.data.length) > 0).toBe(true);
 
           const count = await secretClient.contacts.count();
           expect(count > 0).toBe(true);

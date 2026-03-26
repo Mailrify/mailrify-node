@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### ⚠ BREAKING CHANGES
+
+* `contacts.list()` now returns `{ data, cursor, hasMore, total }` instead of `{ contacts, ... }`.
+* `Contact` schema now includes `status`, `expiresAt`, `projectId`, and `data` is nullable.
+* `Segment` schema now includes `type`, and `condition` is nullable.
+
+### Features
+
+* add `templates` resource (`list`, `create`, `get`, `update`, `delete`) aligned with `/templates` endpoints.
+
+### Bug Fixes
+
+* align `campaigns.send()` response to `{ success, data, message }` with typed `data: Campaign`.
+* align `/templates` list response typing to `{ data, total, page, pageSize, totalPages }`.
+
 ## [1.1.2](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.1...v1.1.2) (2026-03-10)
 
 

@@ -7,6 +7,9 @@ const baseContact = {
   id: 'c_123',
   email: 'user@example.com',
   subscribed: true,
+  status: 'ACTIVE',
+  expiresAt: null,
+  projectId: 'proj_123',
   data: { firstName: 'John' },
   createdAt: '2026-01-01T00:00:00Z',
   updatedAt: '2026-01-01T00:00:00Z'
@@ -21,7 +24,7 @@ describe('contacts resource', () => {
   it('list() returns cursor paginated contacts', async () => {
     installFetchMock([
       jsonResponse({
-        contacts: [baseContact],
+        data: [baseContact],
         cursor: 'next_cursor',
         hasMore: true,
         total: 100
@@ -31,13 +34,13 @@ describe('contacts resource', () => {
 
     const result = await client.contacts.list({ limit: 1 });
 
-    expect(result.contacts).toHaveLength(1);
+    expect(result.data).toHaveLength(1);
     expect(result.cursor).toBe('next_cursor');
     expect(result.hasMore).toBe(true);
   });
 
   it('list() supports filters', async () => {
-    const fetchMock = installFetchMock([jsonResponse({ contacts: [], hasMore: false })]);
+    const fetchMock = installFetchMock([jsonResponse({ data: [], hasMore: false })]);
     const client = new MailGlyph('sk_test_123');
 
     await client.contacts.list({ subscribed: true, search: 'john', limit: 10 });
@@ -97,7 +100,7 @@ describe('contacts resource', () => {
 
     const result = await client.contacts.update('c_123', { data: { plan: 'premium' } });
 
-    expect(result.data.plan).toBe('premium');
+    expect(result.data).toMatchObject({ plan: 'premium' });
     const { init } = getRequest(fetchMock);
     expect(JSON.parse(String(init.body)).data.plan).toBe('premium');
   });
@@ -117,11 +120,20 @@ describe('contacts resource', () => {
   });
 
   it('count() returns total from list response', async () => {
-    installFetchMock([jsonResponse({ contacts: [baseContact], hasMore: false, total: 42 })]);
+    installFetchMock([jsonResponse({ data: [baseContact], hasMore: false, total: 42 })]);
     const client = new MailGlyph('sk_test_123');
 
     const count = await client.contacts.count({ subscribed: true });
 
     expect(count).toBe(42);
+  });
+
+  it('count() falls back to page length when total is omitted', async () => {
+    installFetchMock([jsonResponse({ data: [baseContact], hasMore: false })]);
+    const client = new MailGlyph('sk_test_123');
+
+    const count = await client.contacts.count();
+
+    expect(count).toBe(1);
   });
 });

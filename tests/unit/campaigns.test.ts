@@ -130,18 +130,18 @@ describe('campaigns resource', () => {
   });
 
   it('send() supports immediate send without scheduledFor', async () => {
-    const fetchMock = installFetchMock([jsonResponse({ success: true, message: 'Sending' })]);
+    const fetchMock = installFetchMock([jsonResponse({ success: true, data: campaign, message: 'Sending' })]);
     const client = new MailGlyph('sk_test_123');
 
     const result = await client.campaigns.send('cmp_123');
 
-    expect(result).toMatchObject({ success: true });
+    expect(result).toMatchObject({ success: true, data: { id: 'cmp_123' }, message: 'Sending' });
     const { init } = getRequest(fetchMock);
     expect(init.body).toBeUndefined();
   });
 
   it('send() supports scheduled send', async () => {
-    const fetchMock = installFetchMock([jsonResponse({ success: true, message: 'Scheduled' })]);
+    const fetchMock = installFetchMock([jsonResponse({ success: true, data: campaign, message: 'Scheduled' })]);
     const client = new MailGlyph('sk_test_123');
 
     await client.campaigns.send('cmp_123', { scheduledFor: '2026-03-01T10:00:00Z' });

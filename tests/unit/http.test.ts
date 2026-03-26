@@ -26,7 +26,7 @@ describe('HttpClient', () => {
   });
 
   it('uses custom base URL', async () => {
-    const fetchMock = installFetchMock([jsonResponse({ contacts: [], hasMore: false })]);
+    const fetchMock = installFetchMock([jsonResponse({ data: [], hasMore: false })]);
     const client = new HttpClient({ apiKey: 'sk_test_123', baseUrl: 'https://staging.mailglyph.dev' });
 
     await client.get('/contacts', { authMode: 'secret' });
@@ -70,11 +70,11 @@ describe('HttpClient', () => {
   it('retries for 429 and succeeds', async () => {
     const fetchMock = installFetchMock([
       jsonResponse({ message: 'slow down' }, 429, { 'retry-after': '0' }),
-      jsonResponse({ contacts: [], hasMore: false }, 200)
+      jsonResponse({ data: [], hasMore: false }, 200)
     ]);
     const client = new HttpClient({ apiKey: 'sk_test_123' });
 
-    const result = await client.get<{ contacts: unknown[]; hasMore: boolean }>('/contacts', {
+    const result = await client.get<{ data: unknown[]; hasMore: boolean }>('/contacts', {
       authMode: 'secret'
     });
 

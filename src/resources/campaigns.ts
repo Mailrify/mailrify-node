@@ -9,6 +9,7 @@ import type {
   ListCampaignsParams,
   ListCampaignsResponse,
   SendCampaignParams,
+  SendCampaignResponse,
   UpdateCampaignParams
 } from '../types';
 
@@ -45,8 +46,8 @@ export class CampaignsResource {
     return response.data;
   }
 
-  async send(id: string, params?: SendCampaignParams): Promise<unknown> {
-    return this.http.post<unknown>(`/campaigns/${id}/send`, {
+  async send(id: string, params?: SendCampaignParams): Promise<SendCampaignResponse> {
+    return this.http.post<SendCampaignResponse>(`/campaigns/${id}/send`, {
       body: params,
       authMode: 'secret'
     });

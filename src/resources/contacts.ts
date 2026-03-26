@@ -46,6 +46,6 @@ export class ContactsResource {
 
   async count(params: Omit<ListContactsParams, 'cursor' | 'limit'> = {}): Promise<number> {
     const result = await this.list({ ...params, limit: 1 });
-    return result.total ?? result.contacts.length;
+    return result.total ?? result.data.length;
   }
 }

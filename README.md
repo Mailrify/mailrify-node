@@ -76,7 +76,8 @@ const { eventNames } = await client.events.listNames();
 ## Contacts
 
 ```ts
-const { contacts, cursor, hasMore } = await client.contacts.list({ limit: 50 });
+const { data, cursor, hasMore } = await client.contacts.list({ limit: 50 });
+console.log(data.length, cursor, hasMore);
 
 const contact = await client.contacts.create({
   email: 'user@example.com',
@@ -85,6 +86,23 @@ const contact = await client.contacts.create({
 
 await client.contacts.update(contact.id, { subscribed: false });
 await client.contacts.delete(contact.id);
+```
+
+## Templates
+
+```ts
+const templates = await client.templates.list({ type: 'TRANSACTIONAL', search: 'welcome' });
+console.log(templates.data.length, templates.totalPages);
+
+const template = await client.templates.create({
+  name: 'Welcome',
+  subject: 'Welcome!',
+  body: '<h1>Welcome</h1>',
+  type: 'TRANSACTIONAL'
+});
+
+await client.templates.update(template.id, { subject: 'Welcome to MailGlyph' });
+await client.templates.delete(template.id);
 ```
 
 ## Segments

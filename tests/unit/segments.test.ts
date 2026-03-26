@@ -7,6 +7,7 @@ const segment = {
   id: 'seg_123',
   name: 'Premium Users',
   description: 'Paid users',
+  type: 'DYNAMIC',
   condition: {
     logic: 'AND',
     groups: [{ filters: [{ field: 'data.plan', operator: 'equals', value: 'premium' }] }]
@@ -22,6 +23,9 @@ const contact = {
   id: 'c_123',
   email: 'user@example.com',
   subscribed: true,
+  status: 'ACTIVE',
+  expiresAt: null,
+  projectId: 'proj_123',
   data: { plan: 'premium' },
   createdAt: '2026-01-01T00:00:00Z',
   updatedAt: '2026-01-01T00:00:00Z'
@@ -68,6 +72,7 @@ describe('segments resource', () => {
     const result = await client.segments.get('seg_123');
 
     expect(result.id).toBe('seg_123');
+    expect(result.type).toBe('DYNAMIC');
   });
 
   it('get() throws NotFoundError on 404', async () => {
@@ -84,6 +89,16 @@ describe('segments resource', () => {
     const result = await client.segments.update('seg_123', { name: 'VIP Users' });
 
     expect(result.name).toBe('VIP Users');
+  });
+
+  it('get() supports nullable condition', async () => {
+    installFetchMock([jsonResponse({ ...segment, type: 'STATIC', condition: null })]);
+    const client = new MailGlyph('sk_test_123');
+
+    const result = await client.segments.get('seg_123');
+
+    expect(result.type).toBe('STATIC');
+    expect(result.condition).toBeNull();
   });
 
   it('delete() succeeds with 204', async () => {

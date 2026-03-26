@@ -95,7 +95,10 @@ export interface Contact {
   id: string;
   email: string;
   subscribed: boolean;
-  data: Record<string, unknown>;
+  data: Record<string, unknown> | null;
+  status: 'ACTIVE' | 'PENDING';
+  expiresAt?: string | null;
+  projectId?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -117,7 +120,7 @@ export interface ListContactsParams {
 }
 
 export interface ListContactsResponse {
-  contacts: Contact[];
+  data: Contact[];
   cursor?: string | null;
   hasMore: boolean;
   total?: number;
@@ -249,6 +252,10 @@ export interface CampaignResponse {
   data: Campaign;
 }
 
+export interface SendCampaignResponse extends CampaignResponse {
+  message: string;
+}
+
 export interface CancelCampaignResponse extends CampaignResponse {
   message?: string;
 }
@@ -267,7 +274,8 @@ export interface Segment {
   id: string;
   name: string;
   description?: string | null;
-  condition: FilterCondition;
+  type: 'DYNAMIC' | 'STATIC';
+  condition: FilterCondition | null;
   trackMembership: boolean;
   memberCount: number;
   projectId?: string;
@@ -313,6 +321,53 @@ export interface AddStaticSegmentMembersResponse {
 
 export interface RemoveStaticSegmentMembersResponse {
   removed: number;
+}
+
+export type TemplateType = 'TRANSACTIONAL' | 'MARKETING';
+
+export interface Template {
+  id: string;
+  name: string;
+  description?: string | null;
+  subject: string;
+  body: string;
+  text?: string | null;
+  from: string;
+  fromName?: string | null;
+  replyTo?: string | null;
+  type: TemplateType;
+  projectId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ListTemplatesParams {
+  limit?: number;
+  cursor?: string;
+  type?: TemplateType;
+  search?: string;
+}
+
+export interface ListTemplatesResponse {
+  data: Template[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export interface CreateTemplateParams {
+  name: string;
+  subject: string;
+  body: string;
+  type: TemplateType;
+}
+
+export interface UpdateTemplateParams {
+  name?: string;
+  subject?: string;
+  body?: string;
+  type?: TemplateType;
 }
 
 export interface ApiErrorPayload {
