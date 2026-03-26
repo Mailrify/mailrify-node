@@ -17,6 +17,13 @@
 * align `campaigns.send()` response to `{ success, data, message }` with typed `data: Campaign`.
 * align `/templates` list response typing to `{ data, total, page, pageSize, totalPages }`.
 
+## [1.2.0](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.2...v1.2.0) (2026-03-26)
+
+
+### Features
+
+* add Templates resource and update OpenAPI spec with enhanced schemas for Contacts, Templates, and Campaigns ([c97ca12](https://github.com/MailGlyph/mailglyph-node/commit/c97ca12bbb144262ebf0ee5005aa11d728a68bb1))
+
 ## [1.1.2](https://github.com/MailGlyph/mailglyph-node/compare/v1.1.1...v1.1.2) (2026-03-10)
 
 
